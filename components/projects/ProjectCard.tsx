@@ -13,6 +13,7 @@ const accentMap: Record<string, string> = {
   "Personal Build": "#a855f7",
   "ML Product": "#ffb800",
   "Digital Identity": "#7c6fff",
+  "Marketing Agency": "#ff4d6d",
 };
 
 function getAccent(project: Project) {

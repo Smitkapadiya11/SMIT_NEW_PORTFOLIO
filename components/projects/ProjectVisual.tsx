@@ -204,6 +204,52 @@ export default function ProjectVisual({ projectId, accent = "#7c6fff", className
         </VisualFrame>
       );
 
+    case "recunmedia":
+      return (
+        <VisualFrame accent="#ff4d6d" className={className}>
+          <linearGradient id="recunGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" stopColor="#ff4d6d" />
+            <stop offset="100%" stopColor="#ffb800" />
+          </linearGradient>
+          <PulseRing cx={160} cy={82} r={48} color="#ff4d6d" />
+          <circle cx={160} cy={82} r={48} fill="none" stroke="url(#recunGrad)" strokeWidth="1.5" filter="url(#pv-glow)" />
+          {/* Megaphone / broadcast icon */}
+          <path
+            d="M130 78 L130 86 L118 92 L118 72 L130 78 Z"
+            fill="#ff4d6d"
+            opacity="0.85"
+          />
+          <path
+            d="M130 80 L168 68 L168 96 L130 84 Z"
+            fill="none"
+            stroke="#ffb800"
+            strokeWidth="1.5"
+          />
+          {/* Distribution nodes */}
+          {[
+            [95, 55, "#ff4d6d"],
+            [225, 55, "#ffb800"],
+            [88, 115, "#7c6fff"],
+            [232, 115, "#00e5ff"],
+          ].map(([cx, cy, fill], i) => (
+            <g key={i}>
+              <line x1={160} y1={82} x2={cx as number} y2={cy as number} stroke={fill as string} strokeWidth="0.8" opacity="0.35" strokeDasharray="3 2">
+                <animate attributeName="stroke-dashoffset" values="10;0" dur={`${2 + i * 0.3}s`} repeatCount="indefinite" />
+              </line>
+              <circle cx={cx as number} cy={cy as number} r={5} fill={fill as string} opacity="0.8">
+                <animate attributeName="opacity" values="0.4;1;0.4" dur={`${1.8 + i * 0.2}s`} repeatCount="indefinite" />
+              </circle>
+            </g>
+          ))}
+          <text x={160} y={148} textAnchor="middle" fill="#8888bb" fontSize="11" fontFamily="monospace">
+            Marketing · AI Branding
+          </text>
+          <text x={160} y={162} textAnchor="middle" fill="#ff4d6d" fontSize="9" fontFamily="monospace" opacity="0.7">
+            22-channel distribution
+          </text>
+        </VisualFrame>
+      );
+
     default:
       return (
         <VisualFrame accent={accent} className={className}>

@@ -85,6 +85,29 @@ export const projects: Project[] = [
     tags: ["Fashion", "Lifestyle", "Client Work"],
   },
   {
+    id: "recunmedia",
+    name: "Recun Media",
+    client: "Recun Marketing 18 Pvt Ltd",
+    category: "Marketing Agency",
+    featured: false,
+    url: "https://therecunmedia.in/",
+    description:
+      "AI & digital systems for a founder-branding agency — personal branding, content distribution, and AI clone video at scale.",
+    bullets: [
+      "Deployed AI systems and digital infrastructure for a multi-channel marketing agency serving founders and national brands",
+      "Built website, landing pages, and automation supporting 22-touchpoint content distribution (Dragon's Head system)",
+      "Integrated generative AI and AI clone video workflows for founder personal branding without daily shoots",
+    ],
+    stack: [
+      "Next.js",
+      "Generative AI",
+      "AI Clone Video",
+      "Workflow Automation",
+      "Content Systems",
+    ],
+    tags: ["Marketing", "Personal Branding", "Client Work"],
+  },
+  {
     id: "apnatree",
     name: "ApnaTree",
     client: "Own Project",
@@ -191,6 +214,20 @@ export const vercelProjects: VercelProject[] = [
     url: "https://silkroom.shop",
     domains: ["silkroom.shop"],
     github: "Smitkapadiya11/Silkroom",
+  },
+  {
+    name: "Recun Media",
+    framework: "Next.js",
+    stack: [
+      "Next.js",
+      "Generative AI",
+      "AI Clone Video",
+      "Content Distribution",
+      "Workflow Automation",
+    ],
+    url: "https://therecunmedia.in/",
+    domains: ["therecunmedia.in"],
+    github: null,
   },
   {
     name: "ApnaTree",
