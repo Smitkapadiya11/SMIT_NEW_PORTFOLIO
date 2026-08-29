@@ -3,19 +3,23 @@
 @tailwind utilities;
 
 :root {
-  --bg: #06060f;
-  --surface: #0c0c1e;
-  --surface-2: #12122a;
-  --border: rgba(99, 102, 241, 0.12);
-  --border-bright: rgba(99, 102, 241, 0.35);
-  --accent: #6366f1;
-  --accent-glow: #818cf8;
-  --cyan: #22d3ee;
-  --cyan-glow: #67e8f9;
+  --bg: #05050f;
+  --surface: #0a0a1f;
+  --surface-2: #10102a;
+  --surface-3: #16163a;
+  --border: rgba(120, 100, 255, 0.10);
+  --border-bright: rgba(120, 100, 255, 0.30);
+  --border-glow: rgba(120, 100, 255, 0.60);
+  --accent: #7c6fff;
+  --accent-glow: #a48fff;
+  --cyan: #00e5ff;
+  --cyan-glow: #00b8cc;
+  --emerald: #00ff94;
   --purple: #a855f7;
-  --text-primary: #f8fafc;
-  --text-muted: #475569;
-  --text-soft: #94a3b8;
+  --text-primary: #f0f0ff;
+  --text-muted: #8888bb;
+  --text-soft: #8888bb;
+  --gradient-hero: linear-gradient(135deg, #7c6fff 0%, #00e5ff 50%, #00ff94 100%);
 
   --dur-fast: 150ms;
   --dur-base: 300ms;
@@ -74,8 +78,8 @@ body::before {
 }
 
 ::selection {
-  background: rgba(99, 102, 241, 0.3);
-  color: #fff;
+  background: rgba(124, 111, 255, 0.25);
+  color: var(--text-primary);
 }
 
 @layer components {
@@ -166,7 +170,45 @@ body::before {
   }
 
   .text-gradient {
-    @apply bg-gradient-to-r from-text-primary via-accent-glow to-cyan bg-clip-text text-transparent;
+    background: var(--gradient-hero);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
+
+  .card-glow {
+    position: relative;
+    isolation: isolate;
+  }
+
+  .card-glow::before {
+    content: "";
+    position: absolute;
+    inset: -1px;
+    border-radius: inherit;
+    z-index: -1;
+    background: conic-gradient(
+      from var(--angle, 0deg),
+      transparent 20%,
+      var(--accent) 40%,
+      var(--cyan) 60%,
+      transparent 80%
+    );
+    opacity: 0;
+    transition: opacity 0.4s;
+  }
+
+  .card-glow:hover::before {
+    opacity: 0.5;
+    animation: spin-angle 3s linear infinite;
+  }
+
+  .glow-accent {
+    box-shadow: 0 0 30px rgba(124, 111, 255, 0.25);
+  }
+
+  .glow-text {
+    text-shadow: 0 0 20px rgba(124, 111, 255, 0.6);
   }
 
   .chip {
@@ -259,22 +301,39 @@ body::before {
 
 @keyframes float-orb {
   0%, 100% { transform: translate(0, 0) scale(1); }
-  33% { transform: translate(20px, -30px) scale(1.05); }
-  66% { transform: translate(-15px, 20px) scale(0.95); }
+  33% { transform: translate(24px, -32px) scale(1.06); }
+  66% { transform: translate(-18px, 22px) scale(0.94); }
+}
+
+@keyframes trace-pulse {
+  0% { stroke-dashoffset: 600; opacity: 0; }
+  10% { opacity: 1; }
+  90% { opacity: 1; }
+  100% { stroke-dashoffset: 0; opacity: 0; }
+}
+
+@property --angle {
+  syntax: "<angle>";
+  inherits: false;
+  initial-value: 0deg;
+}
+
+@keyframes spin-angle {
+  to { --angle: 360deg; }
 }
 
 .orb {
   position: absolute;
   border-radius: 50%;
-  filter: blur(60px);
-  opacity: 0.15;
-  animation: float-orb 8s ease-in-out infinite;
+  filter: blur(80px);
+  pointer-events: none;
+  animation: float-orb 10s ease-in-out infinite;
 }
 
 .orb-1 {
   width: 300px;
   height: 300px;
-  background: #6366f1;
+  background: #7c6fff;
   top: -80px;
   left: -80px;
   animation-delay: 0s;
@@ -283,7 +342,7 @@ body::before {
 .orb-2 {
   width: 200px;
   height: 200px;
-  background: #22d3ee;
+  background: #00e5ff;
   bottom: 20%;
   right: -40px;
   animation-delay: -3s;
@@ -292,7 +351,7 @@ body::before {
 .orb-3 {
   width: 150px;
   height: 150px;
-  background: #a855f7;
+  background: #00ff94;
   top: 40%;
   left: 30%;
   animation-delay: -6s;
@@ -337,5 +396,11 @@ body::before {
   .aurora {
     opacity: 0.2;
     filter: blur(60px);
+  }
+}
+
+@media (hover: none) {
+  .card-glow::before {
+    display: none;
   }
 }

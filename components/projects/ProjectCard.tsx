@@ -7,16 +7,16 @@ import PipelineDiagram from "@/components/projects/PipelineDiagram";
 import ProjectVisual from "@/components/projects/ProjectVisual";
 
 const accentMap: Record<string, string> = {
-  "Full Automation Pipeline": "#6366f1",
-  "Business AI": "#22d3ee",
-  "International Client": "#10b981",
+  "Full Automation Pipeline": "#7c6fff",
+  "Business AI": "#00e5ff",
+  "International Client": "#00ff94",
   "Personal Build": "#a855f7",
-  "ML Product": "#f59e0b",
-  "Digital Identity": "#6366f1",
+  "ML Product": "#ffb800",
+  "Digital Identity": "#7c6fff",
 };
 
 function getAccent(project: Project) {
-  return accentMap[project.category] || "#6366f1";
+  return accentMap[project.category] || "#7c6fff";
 }
 
 interface ProjectCardProps {
@@ -51,7 +51,7 @@ function ProjectCardDesktop({ project, size = "medium" }: ProjectCardProps) {
 
   return (
     <motion.article
-      className="group relative hidden flex-col overflow-hidden rounded-2xl border border-border bg-surface md:flex"
+      className="card-glow group relative hidden flex-col overflow-hidden rounded-2xl border border-border bg-surface md:flex"
       style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
       onMouseMove={handleMouse}
       onMouseLeave={() => {
@@ -122,7 +122,7 @@ function ProjectCardMobile({ project }: ProjectCardProps) {
 
   return (
     <motion.article
-      className="rounded-xl border border-border bg-surface transition-transform active:scale-[0.98] md:hidden"
+      className="card-glow rounded-xl border border-border bg-surface transition-transform active:scale-[0.98] md:hidden"
       initial={{ opacity: 0, x: -24 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}

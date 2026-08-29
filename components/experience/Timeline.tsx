@@ -4,7 +4,7 @@ import { motion, useScroll, useTransform } from "framer-motion";
 import { useRef } from "react";
 import { experience } from "@/data/projects";
 
-const COLORS = ["#6366f1", "#22d3ee", "#a855f7"];
+const COLORS = ["#7c6fff", "#00e5ff", "#00ff94"];
 
 export default function Timeline() {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -18,7 +18,7 @@ export default function Timeline() {
     <div ref={containerRef} className="relative">
       <div className="absolute bottom-0 left-8 top-0 hidden w-px bg-border md:block">
         <motion.div
-          className="absolute left-0 top-0 w-full bg-gradient-to-b from-accent via-cyan to-purple"
+          className="absolute left-0 top-0 w-full bg-gradient-to-b from-violet-accent via-cyan-bright to-emerald-bright"
           style={{ height: lineHeight }}
         />
       </div>
