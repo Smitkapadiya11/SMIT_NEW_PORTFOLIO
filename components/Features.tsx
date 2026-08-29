@@ -7,12 +7,12 @@ export default function Features() {
     <section id="features" className="section-padding bg-surface/30">
       <div className="container-max">
         <div className="mb-16 max-w-2xl">
-          <p className="eyebrow mb-4" data-animate="fade-up">What I Build</p>
+          <p className="eyebrow mb-4" data-animate="fade-up">Capabilities</p>
           <h2 className="heading-lg mb-4" data-animate="fade-up" data-delay="100">
-            AI systems for every business layer
+            Full-stack AI for every business layer
           </h2>
           <p className="body-md" data-animate="fade-up" data-delay="200">
-            Not one-size-fits-all templates — custom systems designed around your workflow, your data, your outcomes.
+            Custom systems designed around your workflow — Python, LLMs, WhatsApp, voice, and automation pipelines.
           </p>
         </div>
 

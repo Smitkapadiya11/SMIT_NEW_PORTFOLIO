@@ -1,6 +1,7 @@
 "use client";
 
 import { motion, useReducedMotion } from "framer-motion";
+import { site } from "@/data/site";
 
 const philosophy = [
   "Understand the problem before building the solution",
@@ -11,9 +12,9 @@ const philosophy = [
 ];
 
 const floatingSkills = [
-  "AI Agents", "Grok API", "Node.js", "Automation", "Python",
-  "Next.js", "LLM Integration", "Workflow Design", "RAG",
-  "Data Analysis", "n8n", "ChatGPT", "Claude", "Gemini",
+  "Python", "AI/ML", "Data Science", "Automation", "AI Agents",
+  "WhatsApp API", "Voice AI", "Node.js", "LLM Integration",
+  "Grok API", "n8n", "ChatGPT", "Claude", "Full-Stack",
 ];
 
 export default function About() {
@@ -26,16 +27,20 @@ export default function About() {
           <div>
             <p className="eyebrow mb-4" data-animate="fade-up">About</p>
             <h2 className="heading-lg mb-8" data-animate="fade-up" data-delay="100">
-              Building systems that create measurable impact
+              BCA Graduate. AI Builder. Automation Obsessed.
             </h2>
 
             <p className="body-md mb-6" data-animate="fade-up" data-delay="200">
-              I&apos;m cheerful and lively, yet mature and steady. I have a strong sense of responsibility for my work and am willing to take on responsibilities. I&apos;m innovative and constantly update my knowledge and enhance my understanding. I&apos;m able to lead a team, cultivate employees, and grow together with the company.
+              I graduated from Charotar University of Science & Technology (CHARUSAT) in 2025 with a BCA degree and an obsession for making businesses run smarter. Founder of {site.company} — from Surat to every corner of India, one automation at a time.
+            </p>
+
+            <p className="body-md mb-6" data-animate="fade-up" data-delay="250">
+              I&apos;m cheerful and lively, yet mature and steady. I have a strong sense of responsibility for my work and am willing to take on responsibilities. I&apos;m innovative and constantly update my knowledge — able to lead a team and grow together with the company.
             </p>
 
             <blockquote className="mb-8 border-l-2 border-accent pl-6" data-animate="fade-up" data-delay="300">
               <p className="body-md italic text-text-primary">
-                &ldquo;I believe good work is not about being busy — it&apos;s about creating measurable impact.&rdquo;
+                &ldquo;Good work is not about being busy — it&apos;s about creating measurable impact.&rdquo;
               </p>
             </blockquote>
 

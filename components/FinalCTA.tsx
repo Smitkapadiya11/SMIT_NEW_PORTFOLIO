@@ -16,14 +16,17 @@ export default function FinalCTA() {
           <div className="relative z-10">
             <p className="eyebrow mb-4">Ready when you are</p>
             <h2 className="heading-lg mb-4">
-              Let&apos;s eliminate the manual work
+              Your business is running manually right now
             </h2>
+            <p className="body-md mx-auto mb-2 max-w-xl italic text-text-soft">
+              &ldquo;Every hour without AI is an hour your competitor is pulling ahead.&rdquo;
+            </p>
             <p className="body-md mx-auto mb-8 max-w-xl">
-              Tell me about your process. I&apos;ll tell you what an AI system could do for it — honestly, with no fluff.
+              Deploy your AI agent in 72 hours. Email {site.email} or WhatsApp {site.phoneDisplay}.
             </p>
             <div className="flex flex-wrap justify-center gap-4">
               <a href="#contact" className="btn-primary">
-                Start a Conversation
+                Deploy Your AI Agent
               </a>
               <a href={site.whatsapp} target="_blank" rel="noopener noreferrer" className="btn-secondary">
                 WhatsApp {site.phoneDisplay}

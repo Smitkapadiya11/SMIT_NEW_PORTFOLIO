@@ -108,20 +108,21 @@ export const projects: Project[] = [
   },
   {
     id: "inventory-ai",
-    name: "Inventory AI",
+    name: "AI Inventory Oracle",
     client: "Own Project",
-    category: "ML Prototype",
+    category: "ML Product",
     featured: false,
     url: "https://inventory-ai-mocha.vercel.app",
     screenshot: "/screenshots/inventory-ai.png",
     description:
-      "ML-based inventory forecasting prototype for retail and e-commerce demand prediction.",
+      "Trained on sales data + live market signals — predicts which products will profit and which will drain cash before you spend a rupee.",
     bullets: [
-      "Built demand prediction system using machine learning",
-      "Deployed as a Vercel service for real-time forecasting",
+      "ML-based demand prediction using 5 years of sales data",
+      "Integrated with Shopify and Meesho for e-commerce forecasting",
+      "Deployed on Vercel as a real-time inventory intelligence service",
     ],
-    stack: ["Python", "Machine Learning", "Vercel"],
-    tags: ["ML", "Inventory", "Prototype"],
+    stack: ["Python", "Machine Learning", "Shopify", "Meesho", "Vercel"],
+    tags: ["ML", "Predictive Analytics", "E-commerce"],
   },
   {
     id: "biodata-maker",
@@ -270,7 +271,7 @@ export const experience: ExperienceItem[] = [
   {
     period: "Jan 2026 – Present",
     title: "AI Generalist & Automation Specialist",
-    company: "Kapadiya and sons",
+    company: "Kapadiya and Sons",
     location: "Surat, Gujarat · Hybrid",
     type: "Founder · Full-time",
     description:
@@ -386,10 +387,10 @@ export const aiTools = [
 ];
 
 export const metrics = [
-  { value: "14+", label: "Deployed Projects" },
-  { value: "5+", label: "Client Builds" },
-  { value: "4", label: "AI Platforms" },
-  { value: "100%", label: "Production Code" },
+  { value: "7+", label: "AI Products Live" },
+  { value: "72h", label: "Avg Deployment" },
+  { value: "24/7", label: "Agent Uptime" },
+  { value: "11", label: "Automations Built" },
 ];
 
 export const testimonials = [
