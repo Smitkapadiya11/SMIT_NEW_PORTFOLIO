@@ -2,9 +2,9 @@
 
 export default function SocialProof() {
   const logos = [
-    { name: "Royal Swag", region: "India" },
-    { name: "Amazora", region: "Australia" },
     { name: "Silk Room", region: "India" },
+    { name: "Recun Media", region: "India" },
+    { name: "Amazora", region: "Australia" },
     { name: "ApnaTree", region: "India" },
     { name: "Vercel", region: "Platform" },
     { name: "OpenAI", region: "AI" },
@@ -18,7 +18,7 @@ export default function SocialProof() {
           Trusted by businesses across industries
         </p>
         <p className="body-md mx-auto mb-10 max-w-lg" data-animate="fade-up" data-delay="80">
-          From health & wellness brands to international e-commerce — production AI systems, not prototypes.
+          From fashion brands to marketing agencies and international e-commerce — production AI systems, not prototypes.
         </p>
         <div className="flex flex-wrap items-center justify-center gap-x-10 gap-y-6 md:gap-x-14">
           {logos.map((item, i) => (

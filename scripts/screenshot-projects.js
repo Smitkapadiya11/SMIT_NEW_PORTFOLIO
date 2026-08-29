@@ -3,9 +3,9 @@ const fs = require("fs");
 const path = require("path");
 
 const PROJECTS = [
-  { name: "lungdetox", url: "https://lungdetox.royalswag.in" },
   { name: "amazora", url: "https://amazora.com.au" },
   { name: "silkroom", url: "https://silkroom.shop" },
+  { name: "recunmedia", url: "https://therecunmedia.in/" },
   { name: "apnatree", url: "https://apnatree.vercel.app" },
   { name: "inventory-ai", url: "https://inventory-ai-mocha.vercel.app" },
   { name: "biodata-maker", url: "https://biodata-maker-silk.vercel.app" },

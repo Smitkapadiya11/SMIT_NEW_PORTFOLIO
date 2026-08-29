@@ -37,22 +37,6 @@ export const projects: Project[] = [
     tags: ["Automation", "Generative AI", "Social Media"],
   },
   {
-    id: "lungdetox",
-    name: "LungDetox / Royal Swag",
-    client: "Royal Swag",
-    category: "Business AI",
-    featured: false,
-    url: null,
-    description:
-      "AI integration for a health & wellness brand — automating customer engagement and business operations.",
-    bullets: [
-      "Built AI-powered features for the Royal Swag health brand",
-      "Integrated LLM-based automation into the business workflow",
-    ],
-    stack: ["AI Integration", "Python", "Generative AI", "Next.js"],
-    tags: ["Health & Wellness", "E-commerce", "Client Work"],
-  },
-  {
     id: "amazora",
     name: "Amazora",
     client: "Amazora (Australia)",
@@ -191,14 +175,6 @@ export interface VercelProject {
 }
 
 export const vercelProjects: VercelProject[] = [
-  {
-    name: "Royal Swag",
-    framework: "Next.js",
-    stack: ["Next.js", "TypeScript", "Python", "OpenAI API", "Tailwind CSS"],
-    url: null,
-    domains: ["Health & Wellness · Client Work"],
-    github: "Smitkapadiya11/ROYAL-SWAG",
-  },
   {
     name: "Amazora",
     framework: "Next.js",
@@ -433,9 +409,16 @@ export const testimonials = [
   {
     quote:
       "From concept to deployed Vercel app in days. Smit understands both the tech and the business problem — rare combination.",
-    author: "Royal Swag",
-    role: "Health & Wellness Brand",
+    author: "Silk Room",
+    role: "Fashion & Lifestyle Brand",
     metric: "Live production site",
+  },
+  {
+    quote:
+      "Deployed AI systems and digital infrastructure that power our 22-channel founder branding stack — professional and fast.",
+    author: "Recun Media",
+    role: "Marketing Agency",
+    metric: "AI branding live",
   },
 ];
 

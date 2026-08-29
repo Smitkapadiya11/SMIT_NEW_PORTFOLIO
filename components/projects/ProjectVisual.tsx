@@ -76,33 +76,6 @@ function PulseRing({ cx, cy, r, color }: { cx: number; cy: number; r: number; co
 
 export default function ProjectVisual({ projectId, accent = "#7c6fff", className = "" }: ProjectVisualProps) {
   switch (projectId) {
-    case "lungdetox":
-      return (
-        <VisualFrame accent="#00ff94" className={className}>
-          <linearGradient id="healthGrad" x1="0%" y1="0%" x2="100%" y2="100%">
-            <stop offset="0%" stopColor="#00e5ff" />
-            <stop offset="100%" stopColor="#00ff94" />
-          </linearGradient>
-          <PulseRing cx={160} cy={90} r={52} color="#00e5ff" />
-          <circle cx={160} cy={90} r={52} fill="none" stroke="url(#healthGrad)" strokeWidth="1.5" opacity="0.6" filter="url(#pv-glow)" />
-          <path
-            d="M160 118 C160 118 130 95 130 78 C130 68 138 62 148 62 C154 62 160 68 160 74 C160 68 166 62 172 62 C182 62 190 68 190 78 C190 95 160 118 160 118Z"
-            fill="url(#healthGrad)"
-            opacity="0.9"
-          />
-          <path d="M95 130 Q160 105 225 130" fill="none" stroke="#00e5ff" strokeWidth="1.5" strokeDasharray="4 3" opacity="0.7">
-            <animate attributeName="stroke-dashoffset" values="20;0" dur="2s" repeatCount="indefinite" />
-          </path>
-          <circle cx={95} cy={130} r={4} fill="#00e5ff">
-            <animate attributeName="opacity" values="0.5;1;0.5" dur="1.5s" repeatCount="indefinite" />
-          </circle>
-          <circle cx={225} cy={130} r={4} fill="#00ff94" />
-          <text x={160} y={158} textAnchor="middle" fill="#8888bb" fontSize="11" fontFamily="monospace">
-            Health · AI Integration
-          </text>
-        </VisualFrame>
-      );
-
     case "amazora":
       return (
         <VisualFrame accent="#00ff94" className={className}>
