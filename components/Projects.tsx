@@ -8,11 +8,11 @@ import ProjectCard from "@/components/projects/ProjectCard";
 export default function Projects() {
   const [showMore, setShowMore] = useState(false);
   const featured = projects.find((p) => p.featured)!;
-  const mainProjects = projects.filter((p) => !p.featured && p.id !== "biodata-maker" && p.id !== "smitcard");
-  const extraProjects = projects.filter((p) => p.id === "biodata-maker" || p.id === "smitcard");
+  const mainProjects = projects.filter((p) => !p.featured && p.id !== "smitcard");
+  const extraProjects = projects.filter((p) => p.id === "smitcard");
 
   return (
-    <section id="projects" className="section-padding bg-surface/30">
+    <section id="projects" className="section-padding bg-surface/30 content-auto">
       <div className="container-max">
         <div className="mb-16 max-w-2xl">
           <p className="eyebrow mb-4" data-animate="fade-up">Selected Work</p>
@@ -26,10 +26,8 @@ export default function Projects() {
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
           <ProjectCard project={featured} size="large" />
-          {mainProjects.map((project, i) => (
-            <div key={project.id} data-animate="scale" data-delay={String(100 + i * 100)}>
-              <ProjectCard project={project} />
-            </div>
+          {mainProjects.map((project) => (
+            <ProjectCard key={project.id} project={project} />
           ))}
         </div>
 
@@ -37,10 +35,9 @@ export default function Projects() {
           <button
             onClick={() => setShowMore(!showMore)}
             className="flex items-center gap-2 font-mono text-sm text-text-soft transition-colors hover:text-text-primary"
-            data-animate="fade-up"
           >
             More Projects
-            <ChevronDown size={16} className={`transition-transform ${showMore ? "rotate-180" : ""}`} />
+            <ChevronDown size={16} className={`transition-transform duration-200 ${showMore ? "rotate-180" : ""}`} />
           </button>
 
           {showMore && (

@@ -20,7 +20,7 @@ export default function Features() {
           {features.map((feature, i) => (
             <div
               key={feature.title}
-              className="card-hover group"
+              className="glow-card"
               data-animate="scale"
               data-delay={String(i * 80)}
             >

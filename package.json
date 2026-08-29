@@ -14,8 +14,6 @@
     "@emailjs/browser": "^4.4.1",
     "@react-three/drei": "^9.117.3",
     "@react-three/fiber": "^8.17.10",
-    "animejs": "^3.2.2",
-    "framer-motion": "^11.15.0",
     "lenis": "^1.1.18",
     "lucide-react": "^0.468.0",
     "next": "^14.2.22",
@@ -24,7 +22,6 @@
     "three": "^0.171.0"
   },
   "devDependencies": {
-    "@types/animejs": "^3.1.12",
     "@types/node": "^20.17.10",
     "@types/react": "^18.3.18",
     "@types/react-dom": "^18.3.5",

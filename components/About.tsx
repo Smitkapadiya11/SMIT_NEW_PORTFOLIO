@@ -1,7 +1,10 @@
 "use client";
 
-import { motion, useReducedMotion } from "framer-motion";
-import { site } from "@/data/site";
+const skills = [
+  "Python", "AI/ML", "Data Science", "Automation", "AI Agents",
+  "WhatsApp API", "Voice AI", "Node.js", "LLM Integration",
+  "Grok API", "n8n", "ChatGPT", "Claude", "Full-Stack",
+];
 
 const philosophy = [
   "Understand the problem before building the solution",
@@ -11,17 +14,9 @@ const philosophy = [
   "Focus on outcomes, not just outputs",
 ];
 
-const floatingSkills = [
-  "Python", "AI/ML", "Data Science", "Automation", "AI Agents",
-  "WhatsApp API", "Voice AI", "Node.js", "LLM Integration",
-  "Grok API", "n8n", "ChatGPT", "Claude", "Full-Stack",
-];
-
 export default function About() {
-  const prefersReducedMotion = useReducedMotion();
-
   return (
-    <section id="about" className="section-padding">
+    <section id="about" className="section-padding content-auto">
       <div className="container-max">
         <div className="grid gap-16 lg:grid-cols-2 lg:gap-24">
           <div>
@@ -31,11 +26,7 @@ export default function About() {
             </h2>
 
             <p className="body-md mb-6" data-animate="fade-up" data-delay="200">
-              I graduated from Charotar University of Science & Technology (CHARUSAT) in 2025 with a BCA degree and an obsession for making businesses run smarter. Founder of {site.company} — from Surat to every corner of India, one automation at a time.
-            </p>
-
-            <p className="body-md mb-6" data-animate="fade-up" data-delay="250">
-              I&apos;m cheerful and lively, yet mature and steady. I have a strong sense of responsibility for my work and am willing to take on responsibilities. I&apos;m innovative and constantly update my knowledge — able to lead a team and grow together with the company.
+              I graduated from Charotar University of Science & Technology (CHARUSAT) in 2025 with a BCA degree and an obsession for making businesses run smarter. Founder of Kapadiya and Sons — from Surat to every corner of India, one automation at a time.
             </p>
 
             <blockquote className="mb-8 border-l-2 border-accent pl-6" data-animate="fade-up" data-delay="300">
@@ -49,8 +40,8 @@ export default function About() {
                 <li
                   key={item}
                   className="flex items-start gap-3 text-sm text-text-soft"
-                  data-animate="fade-left"
-                  data-delay={String(400 + i * 80)}
+                  data-animate="fade-up"
+                  data-delay={String(400 + i * 50)}
                 >
                   <span className="mt-1.5 h-1.5 w-1.5 shrink-0 rounded-full bg-accent" />
                   {item}
@@ -59,40 +50,15 @@ export default function About() {
             </ul>
           </div>
 
-          <div className="relative flex min-h-[400px] items-center justify-center">
-            <div className="relative h-full w-full">
-              {floatingSkills.map((skill, i) => {
-                const angle = (i / floatingSkills.length) * Math.PI * 2;
-                const radius = 120 + (i % 3) * 30;
-                const x = Math.cos(angle) * radius;
-                const y = Math.sin(angle) * radius;
-
-                return (
-                  <motion.span
-                    key={skill}
-                    className="chip absolute left-1/2 top-1/2 cursor-default"
-                    style={{ x, y }}
-                    animate={
-                      prefersReducedMotion
-                        ? {}
-                        : {
-                            y: [y, y - 8, y],
-                            transition: {
-                              duration: 3 + (i % 3),
-                              repeat: Infinity,
-                              ease: "easeInOut",
-                              delay: i * 0.2,
-                            },
-                          }
-                    }
-                    whileHover={{ scale: 1.1, borderColor: "rgba(99,102,241,0.5)" }}
-                  >
-                    {skill}
-                  </motion.span>
-                );
-              })}
-              <div className="absolute left-1/2 top-1/2 h-24 w-24 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/10 blur-2xl" />
-            </div>
+          <div className="flex flex-wrap content-start gap-2" data-animate="fade-up" data-delay="200">
+            {skills.map((skill) => (
+              <span
+                key={skill}
+                className="chip transition-colors duration-200 hover:border-accent/50 hover:text-text-primary"
+              >
+                {skill}
+              </span>
+            ))}
           </div>
         </div>
       </div>

@@ -10,7 +10,7 @@ export default function ValueProps() {
           {valueProps.map((prop, i) => (
             <div
               key={prop.title}
-              className="card-hover group relative overflow-hidden"
+              className="glow-card group relative overflow-hidden"
               data-animate="fade-up"
               data-delay={String(i * 100)}
             >

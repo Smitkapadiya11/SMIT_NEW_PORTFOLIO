@@ -15,10 +15,9 @@ export default function ProjectCard({ project, size = "medium" }: ProjectCardPro
 
   return (
     <article
-      className={`card-hover group flex flex-col ${
+      className={`glow-card group flex flex-col ${
         isLarge ? "lg:col-span-2 lg:row-span-2" : ""
       }`}
-      data-animate="scale"
     >
       {project.featured ? (
         <div className="mb-4 rounded-xl border border-border bg-surface-2 p-4">
@@ -30,13 +29,14 @@ export default function ProjectCard({ project, size = "medium" }: ProjectCardPro
             src={project.screenshot}
             alt={`${project.name} screenshot`}
             fill
-            className="object-cover object-top transition-transform duration-500 group-hover:scale-105"
+            loading="lazy"
+            className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.03]"
             sizes="(max-width: 768px) 100vw, 50vw"
             onError={(e) => {
               (e.target as HTMLImageElement).style.display = "none";
             }}
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-60" />
+          <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-50" />
         </div>
       ) : null}
 
@@ -70,7 +70,7 @@ export default function ProjectCard({ project, size = "medium" }: ProjectCardPro
         ))}
       </div>
 
-      {project.url && (
+      {project.url ? (
         <a
           href={project.url}
           target="_blank"
@@ -80,6 +80,10 @@ export default function ProjectCard({ project, size = "medium" }: ProjectCardPro
           View live site
           <ExternalLink size={14} />
         </a>
+      ) : (
+        <span className="font-mono text-[10px] uppercase tracking-wider text-text-muted">
+          Client work · No public link
+        </span>
       )}
     </article>
   );

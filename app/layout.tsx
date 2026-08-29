@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/Navbar";
 import SmoothScroll from "@/components/SmoothScroll";
 import ScrollAnimator from "@/components/ScrollAnimator";
+import VisualBackdrop from "@/components/VisualBackdrop";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -62,10 +63,13 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
       </head>
-      <body className="min-h-screen bg-bg text-text-primary antialiased">
+      <body className="relative min-h-screen bg-bg text-text-primary antialiased">
+        <VisualBackdrop />
         <SmoothScroll />
         <Navbar />
-        <ScrollAnimator>{children}</ScrollAnimator>
+        <ScrollAnimator>
+          <div className="relative z-10">{children}</div>
+        </ScrollAnimator>
       </body>
     </html>
   );

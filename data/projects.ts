@@ -44,7 +44,7 @@ export const projects: Project[] = [
     client: "Royal Swag",
     category: "Business AI",
     featured: false,
-    url: "https://lungdetox.royalswag.in",
+    url: null,
     screenshot: "/screenshots/lungdetox.png",
     description:
       "AI integration for a health & wellness brand — automating customer engagement and business operations.",
@@ -125,23 +125,6 @@ export const projects: Project[] = [
     tags: ["ML", "Predictive Analytics", "E-commerce"],
   },
   {
-    id: "biodata-maker",
-    name: "Biodata Maker",
-    client: "Own Project",
-    category: "Web App",
-    featured: false,
-    url: "https://biodata-maker-silk.vercel.app",
-    screenshot: "/screenshots/biodata-maker.png",
-    description:
-      "Web application for creating professional biodata/resume documents.",
-    bullets: [
-      "Built and deployed a biodata generation tool",
-      "Clean UX for document creation and export",
-    ],
-    stack: ["Next.js", "React", "Vercel"],
-    tags: ["Web App", "Personal Project"],
-  },
-  {
     id: "smitcard",
     name: "SmitCard",
     client: "Own Project",
@@ -186,7 +169,7 @@ export const otherProjectTypes = [
 export interface VercelProject {
   name: string;
   framework: string | null;
-  url: string;
+  url: string | null;
   domains: string[];
   github: string | null;
 }
@@ -195,22 +178,22 @@ export const vercelProjects: VercelProject[] = [
   {
     name: "Royal Swag",
     framework: "Next.js",
-    url: "https://lungdetox.royalswag.in",
-    domains: ["lungdetox.royalswag.in", "royal-swag.vercel.app"],
+    url: null,
+    domains: ["Health & Wellness · Client Work"],
     github: "Smitkapadiya11/ROYAL-SWAG",
   },
   {
     name: "Amazora",
     framework: "Next.js",
     url: "https://amazora.com.au",
-    domains: ["amazora.com.au", "www.amazora.com.au"],
+    domains: ["amazora.com.au"],
     github: null,
   },
   {
     name: "Silk Room",
     framework: "Next.js",
     url: "https://silkroom.shop",
-    domains: ["silkroom.shop", "www.silkroom.shop"],
+    domains: ["silkroom.shop"],
     github: "Smitkapadiya11/Silkroom",
   },
   {
@@ -230,15 +213,15 @@ export const vercelProjects: VercelProject[] = [
   {
     name: "Biodata Maker",
     framework: "Next.js",
-    url: "https://biodata-maker-silk.vercel.app",
-    domains: ["biodata-maker-silk.vercel.app"],
+    url: null,
+    domains: ["Web App · Personal Build"],
     github: "Smitkapadiya11/Biodata-maker",
   },
   {
     name: "Infinity Box",
     framework: "Next.js",
-    url: "https://infinity-box-nine.vercel.app",
-    domains: ["infinity-box-nine.vercel.app"],
+    url: null,
+    domains: ["Personal Build"],
     github: null,
   },
   {

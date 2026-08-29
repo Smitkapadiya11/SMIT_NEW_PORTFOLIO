@@ -20,7 +20,7 @@ export default function AIArsenal() {
           {aiProducts.map((product, i) => (
             <article
               key={product.id}
-              className={`card-hover relative overflow-hidden ${
+              className={`glow-card relative overflow-hidden ${
                 product.featured ? "md:col-span-2 lg:col-span-1" : ""
               }`}
               data-animate="fade-up"

@@ -32,14 +32,6 @@ html.lenis body {
   scroll-behavior: auto !important;
 }
 
-.lenis.lenis-smooth [data-lenis-prevent] {
-  overscroll-behavior: contain;
-}
-
-.lenis.lenis-stopped {
-  overflow: hidden;
-}
-
 body {
   background: var(--bg);
   color: var(--text-primary);
@@ -56,11 +48,16 @@ body {
 
 @layer components {
   .section-padding {
-    @apply px-6 py-24 md:px-12 md:py-32 lg:px-20;
+    @apply px-6 py-20 md:px-12 md:py-28 lg:px-20;
   }
 
   .container-max {
     @apply mx-auto max-w-7xl;
+  }
+
+  .content-auto {
+    content-visibility: auto;
+    contain-intrinsic-size: auto 600px;
   }
 
   .eyebrow {
@@ -88,26 +85,52 @@ body {
   }
 
   .btn-primary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition-all duration-300 hover:bg-accent-glow hover:shadow-glow hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-accent/50;
+    @apply inline-flex items-center justify-center gap-2 rounded-full bg-accent px-6 py-3 text-sm font-medium text-white transition-[transform,box-shadow,background] duration-200 hover:bg-accent-glow hover:shadow-glow active:scale-[0.98];
   }
 
   .btn-secondary {
-    @apply inline-flex items-center justify-center gap-2 rounded-full border border-border bg-surface px-6 py-3 text-sm font-medium text-text-primary transition-all duration-300 hover:border-accent/50 hover:bg-surface-2 hover:scale-[1.02] focus:outline-none focus:ring-2 focus:ring-accent/30;
+    @apply inline-flex items-center justify-center gap-2 rounded-full border border-border bg-surface/80 px-6 py-3 text-sm font-medium text-text-primary transition-[transform,border-color,background] duration-200 hover:border-accent/50 hover:bg-surface-2 active:scale-[0.98];
   }
 
   .card {
-    @apply rounded-2xl border border-border bg-surface p-6 transition-all duration-300;
+    @apply rounded-2xl border border-border bg-surface/90 p-6 backdrop-blur-sm transition-[transform,border-color,box-shadow] duration-200;
   }
 
   .card-hover {
-    @apply card hover:-translate-y-1 hover:border-accent/30 hover:shadow-glow;
+    @apply card hover:-translate-y-0.5 hover:border-accent/25 hover:shadow-glow;
+  }
+
+  .glow-card {
+    @apply relative overflow-hidden rounded-2xl border border-border bg-surface/90 p-6 backdrop-blur-sm transition-[transform,border-color,box-shadow] duration-200;
+  }
+
+  .glow-card::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    border-radius: inherit;
+    padding: 1px;
+    background: linear-gradient(135deg, transparent 40%, rgba(99, 102, 241, 0.35), rgba(34, 211, 238, 0.2), transparent 70%);
+    -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+    -webkit-mask-composite: xor;
+    mask-composite: exclude;
+    opacity: 0;
+    transition: opacity 0.25s ease;
+    pointer-events: none;
+  }
+
+  .glow-card:hover::before {
+    opacity: 1;
+  }
+
+  .glow-card:hover {
+    @apply -translate-y-0.5 border-accent/20 shadow-glow;
   }
 
   .gradient-mesh {
     background:
-      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.15), transparent),
-      radial-gradient(ellipse 60% 40% at 80% 50%, rgba(34, 211, 238, 0.08), transparent),
-      radial-gradient(ellipse 50% 30% at 20% 80%, rgba(99, 102, 241, 0.06), transparent);
+      radial-gradient(ellipse 80% 50% at 50% -20%, rgba(99, 102, 241, 0.12), transparent),
+      radial-gradient(ellipse 60% 40% at 80% 50%, rgba(34, 211, 238, 0.06), transparent);
   }
 
   .text-gradient {
@@ -115,34 +138,86 @@ body {
   }
 
   .chip {
-    @apply inline-flex items-center rounded-full border border-border bg-surface-2 px-3 py-1 font-mono text-xs text-text-soft;
+    @apply inline-flex items-center rounded-full border border-border bg-surface-2/90 px-3 py-1 font-mono text-xs text-text-soft;
   }
 
   .nav-blur {
-    @apply border-b border-border/50 bg-bg/80 backdrop-blur-xl;
+    @apply border-b border-border/50 bg-bg/85 backdrop-blur-md;
+  }
+
+  .bg-grid {
+    background-image:
+      linear-gradient(rgba(99, 102, 241, 0.04) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(99, 102, 241, 0.04) 1px, transparent 1px);
+    background-size: 48px 48px;
+  }
+
+  .aurora {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(80px);
+    opacity: 0.35;
+    will-change: transform;
+  }
+
+  .aurora-1 {
+    width: 420px;
+    height: 420px;
+    background: rgba(99, 102, 241, 0.25);
+    top: -8%;
+    left: -5%;
+    animation: aurora-drift 18s ease-in-out infinite alternate;
+  }
+
+  .aurora-2 {
+    width: 360px;
+    height: 360px;
+    background: rgba(34, 211, 238, 0.15);
+    bottom: 10%;
+    right: -8%;
+    animation: aurora-drift 22s ease-in-out infinite alternate-reverse;
   }
 }
 
 @layer utilities {
-  .animate-on-scroll {
+  [data-animate] {
     opacity: 0;
-    transform: translateY(24px);
+    transform: translateY(20px);
+    transition:
+      opacity 0.5s cubic-bezier(0.22, 1, 0.36, 1),
+      transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+    transition-delay: var(--delay, 0ms);
   }
 
-  .animate-on-scroll-left {
-    opacity: 0;
-    transform: translateX(-32px);
+  [data-animate="fade-left"] {
+    transform: translateX(-24px);
   }
 
-  .animate-on-scroll-right {
-    opacity: 0;
-    transform: translateX(32px);
+  [data-animate="fade-right"] {
+    transform: translateX(24px);
   }
 
-  .animate-on-scroll-scale {
-    opacity: 0;
-    transform: scale(0.95);
+  [data-animate="scale"] {
+    transform: scale(0.97);
   }
+
+  [data-animate].is-visible {
+    opacity: 1;
+    transform: none;
+  }
+
+  [data-delay="100"] { --delay: 80ms; }
+  [data-delay="200"] { --delay: 140ms; }
+  [data-delay="250"] { --delay: 180ms; }
+  [data-delay="300"] { --delay: 220ms; }
+  [data-delay="400"] { --delay: 280ms; }
+  [data-delay="450"] { --delay: 320ms; }
+  [data-delay="500"] { --delay: 360ms; }
+}
+
+@keyframes aurora-drift {
+  0% { transform: translate(0, 0) scale(1); }
+  100% { transform: translate(30px, 20px) scale(1.08); }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -152,14 +227,21 @@ body {
     animation-duration: 0.01ms !important;
     animation-iteration-count: 1 !important;
     transition-duration: 0.01ms !important;
-    scroll-behavior: auto !important;
   }
 
-  .animate-on-scroll,
-  .animate-on-scroll-left,
-  .animate-on-scroll-right,
-  .animate-on-scroll-scale {
+  [data-animate] {
     opacity: 1 !important;
     transform: none !important;
+  }
+
+  .aurora {
+    animation: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .aurora {
+    opacity: 0.2;
+    filter: blur(60px);
   }
 }

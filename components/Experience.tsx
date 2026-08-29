@@ -1,7 +1,63 @@
 "use client";
 
 import { experience, vercelProjects } from "@/data/projects";
-import { ExternalLink } from "lucide-react";
+import { ExternalLink, Lock } from "lucide-react";
+
+function DeploymentCard({
+  project,
+  index,
+}: {
+  project: (typeof vercelProjects)[0];
+  index: number;
+}) {
+  const inner = (
+    <>
+      <div className="mb-3 flex items-center justify-between">
+        <h4 className="font-display font-medium">{project.name}</h4>
+        {project.url ? (
+          <ExternalLink size={14} className="text-text-muted transition-colors group-hover:text-accent" />
+        ) : (
+          <Lock size={13} className="text-text-muted/60" />
+        )}
+      </div>
+      <p className="mb-2 font-mono text-xs text-cyan">{project.framework}</p>
+      <p className="text-xs text-text-muted">{project.domains[0]}</p>
+      {!project.url && (
+        <p className="mt-2 font-mono text-[10px] uppercase tracking-wider text-text-muted/70">
+          Private · Work sample only
+        </p>
+      )}
+      {project.github && (
+        <p className="mt-2 font-mono text-[10px] text-text-muted">{project.github}</p>
+      )}
+    </>
+  );
+
+  if (project.url) {
+    return (
+      <a
+        href={project.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="card-hover group flex flex-col"
+        data-animate="scale"
+        data-delay={String(index * 60)}
+      >
+        {inner}
+      </a>
+    );
+  }
+
+  return (
+    <div
+      className="card group flex flex-col border-border/80 opacity-95 transition-transform duration-200 hover:-translate-y-0.5"
+      data-animate="scale"
+      data-delay={String(index * 60)}
+    >
+      {inner}
+    </div>
+  );
+}
 
 export default function Experience() {
   return (
@@ -27,7 +83,7 @@ export default function Experience() {
                 i % 2 === 0 ? "md:flex-row" : "md:flex-row-reverse"
               }`}
               data-animate={i % 2 === 0 ? "fade-left" : "fade-right"}
-              data-delay={String(i * 150)}
+              data-delay={String(i * 100)}
             >
               <div className="hidden md:block md:w-1/2" />
               <div className="absolute left-4 top-6 h-3 w-3 -translate-x-1/2 rounded-full border-2 border-accent bg-bg md:left-1/2" />
@@ -60,29 +116,11 @@ export default function Experience() {
 
         <div>
           <h3 className="heading-md mb-8" data-animate="fade-up">
-            Vercel Deployments
+            Deployed Projects
           </h3>
           <div className="grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
             {vercelProjects.map((project, i) => (
-              <a
-                key={project.name}
-                href={project.url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="card-hover group flex flex-col"
-                data-animate="scale"
-                data-delay={String(i * 80)}
-              >
-                <div className="mb-3 flex items-center justify-between">
-                  <h4 className="font-display font-medium">{project.name}</h4>
-                  <ExternalLink size={14} className="text-text-muted transition-colors group-hover:text-accent" />
-                </div>
-                <p className="mb-2 font-mono text-xs text-cyan">{project.framework}</p>
-                <p className="text-xs text-text-muted truncate">{project.domains[0]}</p>
-                {project.github && (
-                  <p className="mt-2 font-mono text-[10px] text-text-muted">{project.github}</p>
-                )}
-              </a>
+              <DeploymentCard key={project.name} project={project} index={i} />
             ))}
           </div>
         </div>
