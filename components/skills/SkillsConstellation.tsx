@@ -21,30 +21,22 @@ export default function SkillsConstellation() {
       {SKILLS.map((skill, i) => (
         <motion.div
           key={skill.label}
-          className="absolute cursor-default select-none whitespace-nowrap rounded-full border px-3 py-1.5 font-mono font-medium"
+          className="skill-float absolute cursor-default select-none whitespace-nowrap rounded-full border px-3 py-1.5 font-mono font-medium"
           style={{
             left: `${skill.x}%`,
             top: `${skill.y}%`,
-            transform: "translate(-50%, -50%)",
             color: skill.color,
             borderColor: `${skill.color}40`,
             background: `${skill.color}0d`,
             fontSize:
               skill.size === "lg" ? "0.85rem" : skill.size === "md" ? "0.75rem" : "0.65rem",
+            animationDelay: `${i * 0.3}s`,
+            animationDuration: `${3 + i * 0.4}s`,
           }}
           initial={{ opacity: 0, scale: 0 }}
           whileInView={{ opacity: 1, scale: 1 }}
           viewport={{ once: true }}
           transition={{ delay: i * 0.07, type: "spring", stiffness: 200, damping: 15 }}
-          animate={{
-            y: [0, -8, 0],
-            transition: {
-              duration: 3 + i * 0.4,
-              repeat: Infinity,
-              ease: "easeInOut",
-              delay: i * 0.3,
-            },
-          }}
           whileHover={{ scale: 1.15, boxShadow: `0 0 16px ${skill.color}60` }}
         >
           {skill.label}

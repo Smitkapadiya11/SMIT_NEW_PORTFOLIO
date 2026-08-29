@@ -1,10 +1,10 @@
 "use client";
 
-import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
-import Image from "next/image";
+import { motion, useMotionValue, useTransform } from "framer-motion";
 import { ExternalLink } from "lucide-react";
 import type { Project } from "@/data/projects";
 import PipelineDiagram from "@/components/projects/PipelineDiagram";
+import ProjectVisual from "@/components/projects/ProjectVisual";
 
 const accentMap: Record<string, string> = {
   "Full Automation Pipeline": "#6366f1",
@@ -12,6 +12,7 @@ const accentMap: Record<string, string> = {
   "International Client": "#10b981",
   "Personal Build": "#a855f7",
   "ML Product": "#f59e0b",
+  "Digital Identity": "#6366f1",
 };
 
 function getAccent(project: Project) {
@@ -23,14 +24,24 @@ interface ProjectCardProps {
   size?: "large" | "medium";
 }
 
+function CardVisual({ project, accent }: { project: Project; accent: string }) {
+  if (project.featured) {
+    return (
+      <div className="flex h-full items-center p-3">
+        <PipelineDiagram />
+      </div>
+    );
+  }
+  return <ProjectVisual projectId={project.id} accent={accent} className="h-full min-h-[144px]" />;
+}
+
 function ProjectCardDesktop({ project, size = "medium" }: ProjectCardProps) {
   const isLarge = size === "large";
   const accent = getAccent(project);
   const x = useMotionValue(0);
   const y = useMotionValue(0);
-  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [6, -6]), { stiffness: 200, damping: 30 });
-  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-6, 6]), { stiffness: 200, damping: 30 });
-  const imageY = useTransform(y, [-0.5, 0.5], [-10, 10]);
+  const rotateX = useTransform(y, [-0.5, 0.5], [5, -5]);
+  const rotateY = useTransform(x, [-0.5, 0.5], [-5, 5]);
 
   function handleMouse(e: React.MouseEvent<HTMLDivElement>) {
     const rect = e.currentTarget.getBoundingClientRect();
@@ -40,18 +51,12 @@ function ProjectCardDesktop({ project, size = "medium" }: ProjectCardProps) {
 
   return (
     <motion.article
-      className={`group relative hidden cursor-default flex-col overflow-hidden rounded-2xl border border-border bg-surface md:flex ${
-        isLarge ? "" : ""
-      }`}
-      style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 1000 }}
+      className="group relative hidden flex-col overflow-hidden rounded-2xl border border-border bg-surface md:flex"
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d" }}
       onMouseMove={handleMouse}
       onMouseLeave={() => {
         x.set(0);
         y.set(0);
-      }}
-      whileHover={{
-        borderColor: "rgba(99, 102, 241, 0.35)",
-        boxShadow: "0 0 40px rgba(99,102,241,0.15)",
       }}
       initial={{ opacity: 0, y: 40 }}
       whileInView={{ opacity: 1, y: 0 }}
@@ -59,22 +64,7 @@ function ProjectCardDesktop({ project, size = "medium" }: ProjectCardProps) {
       transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
     >
       <div className="relative h-48 overflow-hidden bg-surface-2">
-        {project.featured ? (
-          <div className="h-full p-3">
-            <PipelineDiagram />
-          </div>
-        ) : project.screenshot ? (
-          <motion.div className="absolute inset-0 h-[120%] w-full" style={{ y: imageY }}>
-            <Image
-              src={project.screenshot}
-              alt={project.name}
-              fill
-              loading="lazy"
-              className="object-cover object-top"
-              sizes="(max-width: 768px) 100vw, 50vw"
-            />
-          </motion.div>
-        ) : null}
+        <CardVisual project={project} accent={accent} />
         <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent" />
         <div
           className="absolute left-3 top-3 rounded-full border px-2.5 py-1 font-mono text-[10px] font-semibold"
@@ -123,46 +113,24 @@ function ProjectCardDesktop({ project, size = "medium" }: ProjectCardProps) {
           </span>
         )}
       </div>
-
-      <motion.div
-        className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
-        style={{
-          background: "linear-gradient(135deg, rgba(99,102,241,0.08) 0%, transparent 60%)",
-        }}
-      />
     </motion.article>
   );
 }
 
-function ProjectCardMobile({ project, size = "medium" }: ProjectCardProps) {
-  const isLarge = size === "large";
+function ProjectCardMobile({ project }: ProjectCardProps) {
   const accent = getAccent(project);
 
   return (
     <motion.article
-      className={`rounded-xl border border-border bg-surface transition-transform active:scale-[0.98] md:hidden`}
+      className="rounded-xl border border-border bg-surface transition-transform active:scale-[0.98] md:hidden"
       initial={{ opacity: 0, x: -24 }}
       whileInView={{ opacity: 1, x: 0 }}
       viewport={{ once: true }}
       transition={{ duration: 0.5 }}
     >
-      {project.featured ? (
-        <div className="border-b border-border p-3">
-          <PipelineDiagram />
-        </div>
-      ) : project.screenshot ? (
-        <div className="relative h-36 overflow-hidden bg-surface-2">
-          <Image
-            src={project.screenshot}
-            alt={project.name}
-            fill
-            loading="lazy"
-            className="object-cover object-top opacity-80"
-            sizes="100vw"
-          />
-          <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent" />
-        </div>
-      ) : null}
+      <div className="relative h-36 overflow-hidden border-b border-border bg-surface-2">
+        <CardVisual project={project} accent={accent} />
+      </div>
 
       <div className="p-4">
         <div className="mb-2 flex items-center justify-between gap-2">

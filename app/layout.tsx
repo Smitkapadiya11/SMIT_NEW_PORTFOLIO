@@ -5,6 +5,7 @@ import Providers from "@/components/providers/Providers";
 import ScrollAnimator from "@/components/ScrollAnimator";
 import VisualBackdrop from "@/components/VisualBackdrop";
 import CursorGlow from "@/components/CursorGlow";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
@@ -69,7 +70,9 @@ export default function RootLayout({
       <body className="relative min-h-screen bg-bg text-text-primary antialiased">
         <Providers>
           <VisualBackdrop />
-          <CursorGlow />
+          <ErrorBoundary fallback={null}>
+            <CursorGlow />
+          </ErrorBoundary>
           <Navbar />
           <ScrollAnimator>
             <div className="relative z-10">{children}</div>

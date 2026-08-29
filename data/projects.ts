@@ -5,7 +5,6 @@ export interface Project {
   category: string;
   featured: boolean;
   url: string | null;
-  screenshot: string | null;
   description: string;
   bullets: string[];
   stack: string[];
@@ -20,7 +19,6 @@ export const projects: Project[] = [
     category: "Full Automation Pipeline",
     featured: true,
     url: null,
-    screenshot: null,
     description:
       "End-to-end content automation: scrapes news → AI filters best stories → generates video scripts → auto-uploads finished videos across all social platforms.",
     bullets: [
@@ -45,7 +43,6 @@ export const projects: Project[] = [
     category: "Business AI",
     featured: false,
     url: null,
-    screenshot: "/screenshots/lungdetox.png",
     description:
       "AI integration for a health & wellness brand — automating customer engagement and business operations.",
     bullets: [
@@ -62,7 +59,6 @@ export const projects: Project[] = [
     category: "International Client",
     featured: false,
     url: "https://amazora.com.au",
-    screenshot: "/screenshots/amazora.png",
     description:
       "AI features and automation built for an Australian e-commerce business.",
     bullets: [
@@ -79,7 +75,6 @@ export const projects: Project[] = [
     category: "Business AI",
     featured: false,
     url: "https://silkroom.shop",
-    screenshot: "/screenshots/silkroom.png",
     description:
       "AI automation system built for a fashion and lifestyle brand.",
     bullets: [
@@ -96,7 +91,6 @@ export const projects: Project[] = [
     category: "Personal Build",
     featured: false,
     url: "https://apnatree.vercel.app",
-    screenshot: "/screenshots/apnatree.png",
     description:
       "Personal project deployed on Vercel — demonstrating full-stack development skills.",
     bullets: [
@@ -113,7 +107,6 @@ export const projects: Project[] = [
     category: "ML Product",
     featured: false,
     url: "https://inventory-ai-mocha.vercel.app",
-    screenshot: "/screenshots/inventory-ai.png",
     description:
       "Trained on sales data + live market signals — predicts which products will profit and which will drain cash before you spend a rupee.",
     bullets: [
@@ -131,7 +124,6 @@ export const projects: Project[] = [
     category: "Digital Identity",
     featured: false,
     url: "https://smitcard.vercel.app",
-    screenshot: "/screenshots/smitcard.png",
     description:
       "Digital business card — a shareable personal identity page.",
     bullets: [

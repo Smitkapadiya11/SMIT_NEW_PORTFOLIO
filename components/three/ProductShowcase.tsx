@@ -2,6 +2,7 @@
 
 import dynamic from "next/dynamic";
 import { useEffect, useRef, useState, Suspense } from "react";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 
 const ShowcaseCanvas = dynamic(() => import("@/components/three/ShowcaseCanvas"), {
   ssr: false,
@@ -69,9 +70,15 @@ export default function ProductShowcase() {
           data-delay="100"
         >
           {inView ? (
-            <Suspense fallback={null}>
-              <ShowcaseCanvas scrollProgress={scrollProgress} />
-            </Suspense>
+            <ErrorBoundary fallback={
+              <div className="flex h-full items-center justify-center">
+                <p className="font-mono text-xs text-text-muted">Interactive preview unavailable</p>
+              </div>
+            }>
+              <Suspense fallback={null}>
+                <ShowcaseCanvas scrollProgress={scrollProgress} />
+              </Suspense>
+            </ErrorBoundary>
           ) : (
             <div className="flex h-full items-center justify-center">
               <p className="font-mono text-xs text-text-muted">Loading 3D…</p>

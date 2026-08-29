@@ -2,15 +2,10 @@
 
 import { useEffect, useState, Suspense, useRef } from "react";
 import dynamic from "next/dynamic";
-import {
-  motion,
-  AnimatePresence,
-  useInView,
-  useSpring,
-  useMotionValueEvent,
-} from "framer-motion";
+import { motion, AnimatePresence, useInView } from "framer-motion";
 import { ArrowDown, Sparkles, Zap } from "lucide-react";
 import { MagneticButton } from "@/components/motion";
+import { ErrorBoundary } from "@/components/ErrorBoundary";
 import { site, heroBadges } from "@/data/site";
 
 const HeroCanvas = dynamic(() => import("@/components/hero/HeroCanvas"), { ssr: false });
@@ -32,14 +27,19 @@ const stats = [
 function CountUp({ value, suffix }: { value: number; suffix: string }) {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true });
-  const spring = useSpring(0, { stiffness: 60, damping: 20 });
   const [display, setDisplay] = useState(0);
 
-  useMotionValueEvent(spring, "change", (v) => setDisplay(Math.round(v)));
-
   useEffect(() => {
-    if (inView) spring.set(value);
-  }, [inView, spring, value]);
+    if (!inView) return;
+    const duration = 1200;
+    const startTime = performance.now();
+    const tick = (now: number) => {
+      const progress = Math.min((now - startTime) / duration, 1);
+      setDisplay(Math.round(progress * value));
+      if (progress < 1) requestAnimationFrame(tick);
+    };
+    requestAnimationFrame(tick);
+  }, [inView, value]);
 
   return (
     <span ref={ref}>
@@ -61,9 +61,11 @@ export default function Hero() {
 
   return (
     <section className="relative flex min-h-screen flex-col justify-center overflow-hidden">
-      <Suspense fallback={null}>
-        <HeroCanvas />
-      </Suspense>
+      <ErrorBoundary fallback={null}>
+        <Suspense fallback={null}>
+          <HeroCanvas />
+        </Suspense>
+      </ErrorBoundary>
 
       <div className="absolute inset-0 md:hidden" aria-hidden>
         <div className="absolute inset-0 animate-gradient-shift bg-gradient-to-br from-indigo-950 via-bg to-purple-950" />
@@ -114,9 +116,9 @@ export default function Hero() {
             <AnimatePresence mode="wait">
               <motion.span
                 key={ROLES[roleIndex]}
-                initial={{ opacity: 0, y: 20, filter: "blur(8px)" }}
-                animate={{ opacity: 1, y: 0, filter: "blur(0px)" }}
-                exit={{ opacity: 0, y: -20, filter: "blur(8px)" }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
                 transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
                 className="block bg-gradient-to-r from-indigo-400 to-cyan-400 bg-clip-text font-display text-xl text-transparent md:text-2xl"
               >
@@ -139,7 +141,7 @@ export default function Hero() {
             className="mb-10 flex flex-col gap-3 sm:flex-row sm:flex-wrap sm:gap-4"
             initial={{ opacity: 0, y: 24 }}
             animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.6, delay: 0.7, type: "spring", stiffness: 200, damping: 20 }}
+            transition={{ duration: 0.6, delay: 0.7 }}
           >
             <MagneticButton className="w-full sm:w-auto">
               <a href="#contact" className="btn-primary w-full md:w-auto">

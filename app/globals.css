@@ -302,6 +302,18 @@ body::before {
   animation: gradient-shift 8s ease-in-out infinite;
 }
 
+.skill-float {
+  transform: translate(-50%, -50%);
+  animation-name: skill-float-y;
+  animation-timing-function: ease-in-out;
+  animation-iteration-count: infinite;
+}
+
+@keyframes skill-float-y {
+  0%, 100% { transform: translate(-50%, -50%); }
+  50% { transform: translate(-50%, calc(-50% - 8px)); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   *,
   *::before,

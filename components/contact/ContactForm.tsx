@@ -4,7 +4,6 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
-import confetti from "canvas-confetti";
 import { site } from "@/data/site";
 
 type FormData = {
@@ -48,6 +47,7 @@ export default function ContactForm() {
 
       setSent(true);
       toast.success("Message received! Smit will reply shortly.");
+      const { default: confetti } = await import("canvas-confetti");
       confetti({
         particleCount: 80,
         spread: 70,
