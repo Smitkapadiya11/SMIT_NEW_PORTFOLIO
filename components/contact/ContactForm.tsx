@@ -4,6 +4,7 @@ import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { useForm } from "react-hook-form";
 import { toast } from "sonner";
+import emailjs from "@emailjs/browser";
 import { site } from "@/data/site";
 
 type FormData = {
@@ -21,6 +22,54 @@ const BUDGETS = [
   "Ongoing retainer",
 ];
 
+async function sendViaFormSubmit(data: FormData) {
+  const res = await fetch(`https://formsubmit.co/ajax/${site.email}`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json", Accept: "application/json" },
+    body: JSON.stringify({
+      name: data.name,
+      email: data.email,
+      company: data.company || "—",
+      budget: data.budget || "—",
+      message: data.message,
+      _subject: `Portfolio Contact — ${data.name}`,
+      _template: "table",
+    }),
+  });
+  if (!res.ok) throw new Error("FormSubmit failed");
+}
+
+async function sendViaEmailJS(data: FormData) {
+  const serviceId = process.env.NEXT_PUBLIC_EMAILJS_SERVICE_ID;
+  const templateId = process.env.NEXT_PUBLIC_EMAILJS_TEMPLATE_ID;
+  const publicKey = process.env.NEXT_PUBLIC_EMAILJS_PUBLIC_KEY;
+  if (!serviceId || !templateId || !publicKey) return false;
+
+  await emailjs.send(
+    serviceId,
+    templateId,
+    {
+      from_name: data.name,
+      from_email: data.email,
+      company: data.company || "—",
+      budget: data.budget || "—",
+      message: data.message,
+      to_email: site.email,
+    },
+    publicKey
+  );
+  return true;
+}
+
+async function sendViaApi(data: FormData) {
+  const res = await fetch("/api/contact", {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(data),
+  });
+  return res.ok;
+}
+
 export default function ContactForm() {
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
@@ -34,19 +83,21 @@ export default function ContactForm() {
   const onSubmit = async (data: FormData) => {
     setSending(true);
     try {
-      const res = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(data),
-      });
+      let delivered = false;
 
-      if (!res.ok) {
-        const err = await res.json().catch(() => ({}));
-        throw new Error(err.error || "Failed");
+      if (await sendViaApi(data)) {
+        delivered = true;
+      } else if (await sendViaEmailJS(data)) {
+        delivered = true;
+      } else {
+        await sendViaFormSubmit(data);
+        delivered = true;
       }
 
+      if (!delivered) throw new Error("All send methods failed");
+
       setSent(true);
-      toast.success("Message received! Smit will reply shortly.");
+      toast.success("Message sent! Smit will reply within 24 hours.");
       const { default: confetti } = await import("canvas-confetti");
       confetti({
         particleCount: 80,
@@ -57,7 +108,11 @@ export default function ContactForm() {
       reset();
       setTimeout(() => setSent(false), 5000);
     } catch {
-      toast.error(`Something went wrong. Email directly: ${site.email}`);
+      const body = encodeURIComponent(
+        `Name: ${data.name}\nEmail: ${data.email}\nCompany: ${data.company || "—"}\nBudget: ${data.budget || "—"}\n\n${data.message}`
+      );
+      window.location.href = `mailto:${site.email}?subject=${encodeURIComponent("Portfolio Inquiry")}&body=${body}`;
+      toast.info("Opening your email app as backup…");
     } finally {
       setSending(false);
     }
@@ -103,13 +158,13 @@ export default function ContactForm() {
 
       <div>
         <textarea
-          {...register("message", { required: true, minLength: 20 })}
+          {...register("message", { required: true, minLength: 10 })}
           placeholder="Tell me what you want to automate or build... *"
           rows={5}
           className={`${inputClass} resize-none`}
         />
         {errors.message && (
-          <p className="mt-1 text-xs text-red-400">Please add a message (min 20 chars)</p>
+          <p className="mt-1 text-xs text-red-400">Please add a message (min 10 chars)</p>
         )}
       </div>
 
@@ -143,7 +198,7 @@ export default function ContactForm() {
       </AnimatePresence>
 
       <p className="text-center text-xs text-text-muted">
-        Your message goes directly to Smit&apos;s inbox. Typical reply: under 24 hours.
+        Message goes to {site.email}. Typical reply: under 24 hours.
       </p>
     </form>
   );

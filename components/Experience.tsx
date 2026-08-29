@@ -14,15 +14,27 @@ function DeploymentCard({
 }) {
   const inner = (
     <>
-      <div className="mb-3 flex items-center justify-between">
+      <div className="mb-3 flex items-center justify-between gap-2">
         <h4 className="font-display font-medium">{project.name}</h4>
         {project.url ? (
-          <ExternalLink size={14} className="text-text-muted transition-colors group-hover:text-accent" />
+          <ExternalLink size={14} className="shrink-0 text-text-muted transition-colors group-hover:text-accent" />
         ) : (
-          <Lock size={13} className="text-text-muted/60" />
+          <Lock size={13} className="shrink-0 text-text-muted/60" />
         )}
       </div>
-      <p className="mb-2 font-mono text-xs text-cyan">{project.framework}</p>
+      {project.framework && (
+        <p className="mb-2 font-mono text-xs text-cyan">{project.framework}</p>
+      )}
+      <div className="mb-3 flex flex-wrap gap-1">
+        {project.stack.map((tech) => (
+          <span
+            key={tech}
+            className="rounded-md border border-border/80 bg-surface-2/80 px-1.5 py-0.5 font-mono text-[9px] text-text-muted"
+          >
+            {tech}
+          </span>
+        ))}
+      </div>
       <p className="text-xs text-text-muted">{project.domains[0]}</p>
       {!project.url && (
         <p className="mt-2 font-mono text-[10px] uppercase tracking-wider text-text-muted/70">

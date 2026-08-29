@@ -1,14 +1,14 @@
 "use client";
 
 import { FadeUp } from "@/components/motion";
-import SkillsConstellation from "@/components/skills/SkillsConstellation";
+import SkillsOrbit from "@/components/skills/SkillsOrbit";
 import { skillGroups } from "@/data/projects";
 
 export default function Skills() {
   return (
     <section id="skills" className="section-padding bg-surface/30 content-auto">
       <div className="container-max">
-        <FadeUp className="mb-16 max-w-2xl">
+        <FadeUp className="mb-10 max-w-2xl">
           <p className="eyebrow mb-4">Capabilities</p>
           <h2 className="heading-lg mb-4">Tools & expertise</h2>
           <p className="body-md">
@@ -16,20 +16,20 @@ export default function Skills() {
           </p>
         </FadeUp>
 
-        <FadeUp delay={0.1} className="mb-10">
-          <SkillsConstellation />
+        <FadeUp delay={0.1}>
+          <SkillsOrbit />
         </FadeUp>
 
-        <div className="grid gap-8 md:grid-cols-2 lg:grid-cols-3">
+        <div className="grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
           {skillGroups.map((group, i) => (
-            <FadeUp key={group.title} delay={0.15 + i * 0.08}>
-              <div className="glow-card h-full">
-                <h3 className="mb-4 font-display text-lg font-medium">{group.title}</h3>
-                <div className="flex flex-wrap gap-2">
+            <FadeUp key={group.title} delay={0.12 + i * 0.06}>
+              <div className="rounded-xl border border-border bg-surface/60 p-5">
+                <h3 className="mb-3 font-display text-base font-medium">{group.title}</h3>
+                <div className="flex flex-wrap gap-1.5">
                   {group.skills.map((skill) => (
                     <span
                       key={skill}
-                      className="chip transition-colors hover:border-accent/40 hover:text-text-primary"
+                      className="rounded-full border border-border/80 bg-surface-2/80 px-2.5 py-1 font-mono text-[10px] text-text-soft transition-colors hover:border-accent/40 hover:text-text-primary"
                     >
                       {skill}
                     </span>

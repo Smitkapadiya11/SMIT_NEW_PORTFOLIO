@@ -161,6 +161,7 @@ export const otherProjectTypes = [
 export interface VercelProject {
   name: string;
   framework: string | null;
+  stack: string[];
   url: string | null;
   domains: string[];
   github: string | null;
@@ -170,6 +171,7 @@ export const vercelProjects: VercelProject[] = [
   {
     name: "Royal Swag",
     framework: "Next.js",
+    stack: ["Next.js", "TypeScript", "Python", "OpenAI API", "Tailwind CSS"],
     url: null,
     domains: ["Health & Wellness · Client Work"],
     github: "Smitkapadiya11/ROYAL-SWAG",
@@ -177,6 +179,7 @@ export const vercelProjects: VercelProject[] = [
   {
     name: "Amazora",
     framework: "Next.js",
+    stack: ["Next.js", "React", "TypeScript", "AI Automation", "E-commerce API"],
     url: "https://amazora.com.au",
     domains: ["amazora.com.au"],
     github: null,
@@ -184,6 +187,7 @@ export const vercelProjects: VercelProject[] = [
   {
     name: "Silk Room",
     framework: "Next.js",
+    stack: ["Next.js", "React", "Generative AI", "Workflow Automation", "Vercel"],
     url: "https://silkroom.shop",
     domains: ["silkroom.shop"],
     github: "Smitkapadiya11/Silkroom",
@@ -191,13 +195,15 @@ export const vercelProjects: VercelProject[] = [
   {
     name: "ApnaTree",
     framework: "Next.js",
+    stack: ["Next.js", "React", "Node.js", "MongoDB", "Vercel"],
     url: "https://apnatree.vercel.app",
     domains: ["apnatree-in.vercel.app"],
     github: "Smitkapadiya11/apnatree-in",
   },
   {
     name: "Inventory AI",
-    framework: "Services",
+    framework: "Python · ML",
+    stack: ["Python", "Machine Learning", "Flask", "Shopify API", "Meesho API"],
     url: "https://inventory-ai-mocha.vercel.app",
     domains: ["inventory-ai-mocha.vercel.app"],
     github: "Smitkapadiya11/Snackle.site",
@@ -205,6 +211,7 @@ export const vercelProjects: VercelProject[] = [
   {
     name: "Biodata Maker",
     framework: "Next.js",
+    stack: ["Next.js", "React", "JavaScript", "PDF Generation", "Tailwind CSS"],
     url: null,
     domains: ["Web App · Personal Build"],
     github: "Smitkapadiya11/Biodata-maker",
@@ -212,6 +219,7 @@ export const vercelProjects: VercelProject[] = [
   {
     name: "Infinity Box",
     framework: "Next.js",
+    stack: ["Next.js", "React", "TypeScript", "Framer Motion", "Vercel"],
     url: null,
     domains: ["Personal Build"],
     github: null,
@@ -219,6 +227,7 @@ export const vercelProjects: VercelProject[] = [
   {
     name: "SmitCard",
     framework: "Static",
+    stack: ["HTML", "CSS", "JavaScript", "vCard", "Vercel"],
     url: "https://smitcard.vercel.app",
     domains: ["smitcard.vercel.app"],
     github: "Smitkapadiya11/Digital-card",
@@ -226,6 +235,7 @@ export const vercelProjects: VercelProject[] = [
   {
     name: "Snackle Site",
     framework: "Next.js",
+    stack: ["Next.js", "React", "Node.js", "Inventory AI", "Vercel"],
     url: "https://snackle-site.vercel.app",
     domains: ["snackle-site.vercel.app"],
     github: "Smitkapadiya11/Snackle.site",
