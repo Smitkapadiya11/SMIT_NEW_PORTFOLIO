@@ -8,16 +8,20 @@ const config: Config = {
   ],
   theme: {
     extend: {
+      screens: {
+        xs: "375px",
+      },
       colors: {
-        bg: "#080810",
-        surface: "#0f0f1a",
-        "surface-2": "#16162a",
-        border: "#1e1e35",
+        bg: "#06060f",
+        surface: "#0c0c1e",
+        "surface-2": "#12122a",
+        border: "rgba(99, 102, 241, 0.12)",
         accent: "#6366f1",
         "accent-glow": "#818cf8",
         cyan: "#22d3ee",
-        "text-primary": "#f1f5f9",
-        "text-muted": "#64748b",
+        purple: "#a855f7",
+        "text-primary": "#f8fafc",
+        "text-muted": "#475569",
         "text-soft": "#94a3b8",
       },
       fontFamily: {
@@ -33,6 +37,7 @@ const config: Config = {
         marquee: "marquee 40s linear infinite",
         "marquee-reverse": "marquee-reverse 40s linear infinite",
         float: "float 6s ease-in-out infinite",
+        "gradient-shift": "gradient-shift 8s ease-in-out infinite",
       },
       keyframes: {
         marquee: {
@@ -46,6 +51,10 @@ const config: Config = {
         float: {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-12px)" },
+        },
+        "gradient-shift": {
+          "0%, 100%": { opacity: "1" },
+          "50%": { opacity: "0.7" },
         },
       },
       boxShadow: {

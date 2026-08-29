@@ -1,90 +1,216 @@
 "use client";
 
+import { motion, useMotionValue, useTransform, useSpring } from "framer-motion";
 import Image from "next/image";
 import { ExternalLink } from "lucide-react";
 import type { Project } from "@/data/projects";
 import PipelineDiagram from "@/components/projects/PipelineDiagram";
+
+const accentMap: Record<string, string> = {
+  "Full Automation Pipeline": "#6366f1",
+  "Business AI": "#22d3ee",
+  "International Client": "#10b981",
+  "Personal Build": "#a855f7",
+  "ML Product": "#f59e0b",
+};
+
+function getAccent(project: Project) {
+  return accentMap[project.category] || "#6366f1";
+}
 
 interface ProjectCardProps {
   project: Project;
   size?: "large" | "medium";
 }
 
-export default function ProjectCard({ project, size = "medium" }: ProjectCardProps) {
+function ProjectCardDesktop({ project, size = "medium" }: ProjectCardProps) {
   const isLarge = size === "large";
+  const accent = getAccent(project);
+  const x = useMotionValue(0);
+  const y = useMotionValue(0);
+  const rotateX = useSpring(useTransform(y, [-0.5, 0.5], [6, -6]), { stiffness: 200, damping: 30 });
+  const rotateY = useSpring(useTransform(x, [-0.5, 0.5], [-6, 6]), { stiffness: 200, damping: 30 });
+  const imageY = useTransform(y, [-0.5, 0.5], [-10, 10]);
+
+  function handleMouse(e: React.MouseEvent<HTMLDivElement>) {
+    const rect = e.currentTarget.getBoundingClientRect();
+    x.set((e.clientX - rect.left) / rect.width - 0.5);
+    y.set((e.clientY - rect.top) / rect.height - 0.5);
+  }
 
   return (
-    <article
-      className={`glow-card group flex flex-col ${
-        isLarge ? "lg:col-span-2 lg:row-span-2" : ""
+    <motion.article
+      className={`group relative hidden cursor-default flex-col overflow-hidden rounded-2xl border border-border bg-surface md:flex ${
+        isLarge ? "" : ""
       }`}
+      style={{ rotateX, rotateY, transformStyle: "preserve-3d", perspective: 1000 }}
+      onMouseMove={handleMouse}
+      onMouseLeave={() => {
+        x.set(0);
+        y.set(0);
+      }}
+      whileHover={{
+        borderColor: "rgba(99, 102, 241, 0.35)",
+        boxShadow: "0 0 40px rgba(99,102,241,0.15)",
+      }}
+      initial={{ opacity: 0, y: 40 }}
+      whileInView={{ opacity: 1, y: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.6, ease: [0.16, 1, 0.3, 1] }}
+    >
+      <div className="relative h-48 overflow-hidden bg-surface-2">
+        {project.featured ? (
+          <div className="h-full p-3">
+            <PipelineDiagram />
+          </div>
+        ) : project.screenshot ? (
+          <motion.div className="absolute inset-0 h-[120%] w-full" style={{ y: imageY }}>
+            <Image
+              src={project.screenshot}
+              alt={project.name}
+              fill
+              loading="lazy"
+              className="object-cover object-top"
+              sizes="(max-width: 768px) 100vw, 50vw"
+            />
+          </motion.div>
+        ) : null}
+        <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent" />
+        <div
+          className="absolute left-3 top-3 rounded-full border px-2.5 py-1 font-mono text-[10px] font-semibold"
+          style={{ borderColor: accent, color: accent, background: `${accent}18` }}
+        >
+          {project.category}
+        </div>
+      </div>
+
+      <div className="flex flex-1 flex-col p-5">
+        <h3 className={`mb-2 font-display font-semibold ${isLarge ? "text-2xl" : "text-lg"}`}>
+          {project.name}
+        </h3>
+        <p className="mb-4 flex-1 text-sm text-text-soft">{project.description}</p>
+        <ul className="mb-4 space-y-1.5">
+          {project.bullets.map((b) => (
+            <li key={b} className="flex gap-2 text-xs text-text-soft">
+              <span className="mt-0.5 flex-shrink-0 text-accent">→</span>
+              {b}
+            </li>
+          ))}
+        </ul>
+        <div className="mb-4 flex flex-wrap gap-1.5">
+          {project.stack.map((s) => (
+            <span
+              key={s}
+              className="rounded-md border border-border bg-surface-2 px-2 py-0.5 font-mono text-[10px] text-text-muted"
+            >
+              {s}
+            </span>
+          ))}
+        </div>
+        {project.url ? (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center gap-2 text-sm text-accent transition-colors hover:text-accent-glow"
+          >
+            View live site
+            <ExternalLink size={14} />
+          </a>
+        ) : (
+          <span className="font-mono text-[10px] uppercase tracking-wider text-text-muted">
+            Client work · No public link
+          </span>
+        )}
+      </div>
+
+      <motion.div
+        className="pointer-events-none absolute inset-0 rounded-2xl opacity-0 transition-opacity duration-300 group-hover:opacity-100"
+        style={{
+          background: "linear-gradient(135deg, rgba(99,102,241,0.08) 0%, transparent 60%)",
+        }}
+      />
+    </motion.article>
+  );
+}
+
+function ProjectCardMobile({ project, size = "medium" }: ProjectCardProps) {
+  const isLarge = size === "large";
+  const accent = getAccent(project);
+
+  return (
+    <motion.article
+      className={`rounded-xl border border-border bg-surface transition-transform active:scale-[0.98] md:hidden`}
+      initial={{ opacity: 0, x: -24 }}
+      whileInView={{ opacity: 1, x: 0 }}
+      viewport={{ once: true }}
+      transition={{ duration: 0.5 }}
     >
       {project.featured ? (
-        <div className="mb-4 rounded-xl border border-border bg-surface-2 p-4">
+        <div className="border-b border-border p-3">
           <PipelineDiagram />
         </div>
       ) : project.screenshot ? (
-        <div className="relative mb-4 aspect-video overflow-hidden rounded-xl border border-border bg-surface-2">
+        <div className="relative h-36 overflow-hidden bg-surface-2">
           <Image
             src={project.screenshot}
-            alt={`${project.name} screenshot`}
+            alt={project.name}
             fill
             loading="lazy"
-            className="object-cover object-top transition-transform duration-300 group-hover:scale-[1.03]"
-            sizes="(max-width: 768px) 100vw, 50vw"
-            onError={(e) => {
-              (e.target as HTMLImageElement).style.display = "none";
-            }}
+            className="object-cover object-top opacity-80"
+            sizes="100vw"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-surface via-transparent to-transparent opacity-50" />
+          <div className="absolute inset-0 bg-gradient-to-t from-surface to-transparent" />
         </div>
       ) : null}
 
-      <div className="mb-3 flex flex-wrap items-center gap-2">
-        <span className="chip text-cyan">{project.category}</span>
-        {project.tags.slice(0, 2).map((tag) => (
-          <span key={tag} className="chip">{tag}</span>
-        ))}
-      </div>
-
-      <h3 className={`font-display font-semibold ${isLarge ? "text-2xl" : "text-xl"} mb-2`}>
-        {project.name}
-      </h3>
-
-      <p className="body-md mb-4 flex-1 text-sm">{project.description}</p>
-
-      <ul className="mb-4 space-y-2">
-        {project.bullets.map((bullet) => (
-          <li key={bullet} className="flex items-start gap-2 text-sm text-text-soft">
-            <span className="mt-1.5 h-1 w-1 shrink-0 rounded-full bg-accent" />
-            {bullet}
-          </li>
-        ))}
-      </ul>
-
-      <div className="mb-4 flex flex-wrap gap-2">
-        {project.stack.map((tech) => (
-          <span key={tech} className="font-mono text-[10px] uppercase tracking-wider text-text-muted">
-            {tech}
+      <div className="p-4">
+        <div className="mb-2 flex items-center justify-between gap-2">
+          <h3 className="text-sm font-semibold text-text-primary">{project.name}</h3>
+          <span
+            className="rounded-full border px-2 py-0.5 font-mono text-[10px]"
+            style={{ color: accent, borderColor: `${accent}40` }}
+          >
+            {project.category}
           </span>
-        ))}
+        </div>
+        <p className="mb-3 text-sm leading-relaxed text-text-soft">{project.description}</p>
+        <div className="flex flex-wrap gap-1">
+          {project.stack.slice(0, 4).map((s) => (
+            <span
+              key={s}
+              className="rounded bg-surface-2 px-1.5 py-0.5 font-mono text-[10px] text-text-muted"
+            >
+              {s}
+            </span>
+          ))}
+        </div>
+        {!project.url && (
+          <p className="mt-3 font-mono text-[10px] uppercase tracking-wider text-text-muted">
+            Client work · No public link
+          </p>
+        )}
+        {project.url && (
+          <a
+            href={project.url}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-3 inline-flex min-h-[44px] items-center gap-2 text-sm text-accent"
+          >
+            View live site
+            <ExternalLink size={14} />
+          </a>
+        )}
       </div>
+    </motion.article>
+  );
+}
 
-      {project.url ? (
-        <a
-          href={project.url}
-          target="_blank"
-          rel="noopener noreferrer"
-          className="inline-flex items-center gap-2 text-sm text-accent transition-colors hover:text-accent-glow"
-        >
-          View live site
-          <ExternalLink size={14} />
-        </a>
-      ) : (
-        <span className="font-mono text-[10px] uppercase tracking-wider text-text-muted">
-          Client work · No public link
-        </span>
-      )}
-    </article>
+export default function ProjectCard(props: ProjectCardProps) {
+  return (
+    <>
+      <ProjectCardDesktop {...props} />
+      <ProjectCardMobile {...props} />
+    </>
   );
 }

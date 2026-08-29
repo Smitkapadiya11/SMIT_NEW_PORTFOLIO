@@ -1,6 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
+import { motion } from "framer-motion";
 import { Menu, X } from "lucide-react";
 
 const links = [
@@ -22,10 +23,13 @@ export default function Navbar() {
   }, []);
 
   return (
-    <header
+    <motion.header
       className={`fixed left-0 right-0 top-0 z-50 transition-[padding,background,border] duration-200 ${
         scrolled ? "nav-blur py-3" : "bg-transparent py-5"
       }`}
+      initial={{ opacity: 0, y: -16 }}
+      animate={{ opacity: 1, y: 0 }}
+      transition={{ duration: 0.5, ease: [0.16, 1, 0.3, 1] }}
     >
       <nav className="container-max flex items-center justify-between px-6 md:px-12 lg:px-20">
         <a href="#" className="font-display text-lg font-semibold tracking-tight">
@@ -50,7 +54,7 @@ export default function Navbar() {
         </a>
 
         <button
-          className="flex h-10 w-10 items-center justify-center rounded-lg border border-border md:hidden"
+          className="flex h-11 w-11 min-h-[44px] min-w-[44px] items-center justify-center rounded-lg border border-border md:hidden"
           onClick={() => setMobileOpen(!mobileOpen)}
           aria-label="Toggle menu"
           aria-expanded={mobileOpen}
@@ -69,7 +73,7 @@ export default function Navbar() {
             <li key={link.href}>
               <a
                 href={link.href}
-                className="block rounded-lg px-4 py-3 text-sm text-text-soft transition-colors hover:bg-surface hover:text-text-primary"
+                className="block min-h-[44px] rounded-lg px-4 py-3 text-sm text-text-soft transition-colors hover:bg-surface hover:text-text-primary"
                 onClick={() => setMobileOpen(false)}
               >
                 {link.label}
@@ -77,12 +81,16 @@ export default function Navbar() {
             </li>
           ))}
           <li className="pt-2">
-            <a href="#contact" className="btn-primary w-full text-sm" onClick={() => setMobileOpen(false)}>
+            <a
+              href="#contact"
+              className="btn-primary w-full text-sm"
+              onClick={() => setMobileOpen(false)}
+            >
               Let&apos;s Connect
             </a>
           </li>
         </ul>
       </div>
-    </header>
+    </motion.header>
   );
 }

@@ -25,7 +25,9 @@ export default function Projects() {
         </div>
 
         <div className="grid gap-6 md:grid-cols-2 lg:grid-cols-3">
-          <ProjectCard project={featured} size="large" />
+          <div className="lg:col-span-2 lg:row-span-2">
+            <ProjectCard project={featured} size="large" />
+          </div>
           {mainProjects.map((project) => (
             <ProjectCard key={project.id} project={project} />
           ))}

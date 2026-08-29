@@ -1,21 +1,25 @@
 import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Navbar";
-import SmoothScroll from "@/components/SmoothScroll";
+import Providers from "@/components/providers/Providers";
 import ScrollAnimator from "@/components/ScrollAnimator";
 import VisualBackdrop from "@/components/VisualBackdrop";
+import CursorGlow from "@/components/CursorGlow";
 import { site } from "@/data/site";
 
 export const metadata: Metadata = {
-  title: `${site.name} — ${site.title}`,
-  description: site.description,
+  title: `${site.name} — AI Generalist & Automation Specialist`,
+  description:
+    "I build AI systems that eliminate manual work — automation pipelines, LLM integrations, chatbots, and AI agents for real businesses. Based in Surat, India.",
   metadataBase: new URL(site.url),
   openGraph: {
-    title: `${site.name} — ${site.title}`,
-    description: site.description,
+    title: `${site.name} — AI Generalist`,
+    description:
+      "8+ months building real AI for real clients. From automation pipelines to generative AI integrations.",
     type: "website",
     locale: "en_IN",
     url: site.url,
+    siteName: site.name,
   },
   twitter: {
     card: "summary_large_image",
@@ -28,7 +32,7 @@ const jsonLd = {
   "@context": "https://schema.org",
   "@type": "Person",
   name: site.name,
-  jobTitle: site.title,
+  jobTitle: "AI Generalist & Automation Specialist",
   url: site.url,
   email: site.email,
   telephone: site.phone,
@@ -36,7 +40,6 @@ const jsonLd = {
     "@type": "PostalAddress",
     addressLocality: "Surat",
     addressRegion: "Gujarat",
-    postalCode: "395010",
     addressCountry: "IN",
   },
   sameAs: [site.linkedin, site.github],
@@ -64,12 +67,14 @@ export default function RootLayout({
         />
       </head>
       <body className="relative min-h-screen bg-bg text-text-primary antialiased">
-        <VisualBackdrop />
-        <SmoothScroll />
-        <Navbar />
-        <ScrollAnimator>
-          <div className="relative z-10">{children}</div>
-        </ScrollAnimator>
+        <Providers>
+          <VisualBackdrop />
+          <CursorGlow />
+          <Navbar />
+          <ScrollAnimator>
+            <div className="relative z-10">{children}</div>
+          </ScrollAnimator>
+        </Providers>
       </body>
     </html>
   );
